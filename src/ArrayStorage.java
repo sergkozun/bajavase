@@ -12,8 +12,8 @@ public class ArrayStorage {
         size = 0;
     }
 
-    void save(Resume r) {
-        storage[size] = r;
+    void save(Resume requestResume) {
+        storage[size] = requestResume;
         size++;
     }
 
