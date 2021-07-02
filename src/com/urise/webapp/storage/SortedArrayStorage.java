@@ -10,6 +10,12 @@ import java.util.Arrays;
 public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
+    protected void fillDeletedElement(int index) {
+        int numMoved = size - index - 1;
+        if (numMoved > 0) System.arraycopy(storage, index + 1, storage, index, numMoved);
+    }
+
+    @Override
     public int getIndex(String uuid) {
         Resume searchKey = new Resume();
         searchKey.setUuid(uuid);
@@ -17,63 +23,11 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    public void clear() {
-        Arrays.fill(storage, 0, size, null);
-        size = 0;
-    }
-
-    @Override
-    public void save(Resume resume) {
-        int index = getIndex(resume.getUuid());
-        if (index != -1) {      // Проверка наличия
-            System.out.println("Resume " + resume.getUuid() + " is already exist");
-        } else if (size == STORAGE_LIMIT) {      // Защита от переполнения
-            System.out.println("Storage overflow");
-        } else {
-            storage[size] = resume;
-            size++;
-        }
-    }
-
-    @Override
-    public Resume get(String uuid) {
-        int index = getIndex(uuid);
-        if (index == -1) {      // Проверка наличия
-            System.out.println("Resume " + uuid + " is not exist");
-            return null;
-        } else {
-            return storage[index];
-        }
-    }
-
-    @Override
-    public void delete(String uuid) {
-        int index = getIndex(uuid);
-        if (index == -1) {      // Проверка наличия
-            System.out.println("Resume " + uuid + " is not exist");
-        } else {
-            storage[index] = storage[size - 1];
-            storage[size - 1] = null;
-            size--;
-        }
-    }
-
-    @Override
-    public void update(Resume resume) {
-        int index = getIndex(resume.getUuid());
-        if (index == -1) {      // Проверка наличия
-            System.out.println("Resume " + resume.getUuid() + " is not exist");
-        } else {
-            storage[index] = resume;
-        }
+    protected void insertElement(Resume resume, int index) {
     }
 
     /**
      * @return array, contains only Resumes in storage (without null)
      */
 
-    @Override
-    public Resume[] getAll() {
-        return Arrays.copyOfRange(storage, 0, size);
-    }
 }
