@@ -21,7 +21,7 @@ public abstract class AbstractArrayStorageTest {
     }
 
     @Before
-    public void setUp(){
+    public void setUp() {
         storage.clear();
         storage.save(new Resume(UUID_1));
         storage.save(new Resume(UUID_2));
@@ -88,10 +88,10 @@ public abstract class AbstractArrayStorageTest {
     }
 
     @Test(expected = StorageException.class)
-    public void storageOverflow(){
+    public void storageOverflow() {
         StringBuilder newUuid = new StringBuilder("uuid");
         try {
-            for(int i = 4; i <= 10000; i++){
+            for (int i = 4; i <= 10000; i++) {
                 storage.save(new Resume(newUuid.append(i).toString()));
             }
         } catch (StorageException e) {
