@@ -54,8 +54,8 @@ public abstract class AbstractArrayStorage implements Storage {
     public void update(Resume resume) {
         int index = getIndex(resume.getUuid());
         if (index < 0 ) {      // Проверка наличия
-            throw new ExistStorageException(resume.getUuid());
-        } else {
+            throw new NotExistStorageException(resume.getUuid());
+        } else{
             storage[index] = resume;
         }
     }
