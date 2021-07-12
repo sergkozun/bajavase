@@ -8,7 +8,7 @@ import java.lang.reflect.Method;
 
 public class MainReflection {
     public static void main(String[] args) throws IllegalAccessException, InvocationTargetException {
-        Resume resume = new Resume("777");
+        Resume resume = new Resume("777", "testReflectionName");
         Field field = resume.getClass().getDeclaredFields()[0];
         System.out.println(field.getName());
         field.setAccessible(true);

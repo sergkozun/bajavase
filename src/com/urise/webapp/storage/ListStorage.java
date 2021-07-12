@@ -1,86 +1,60 @@
 package com.urise.webapp.storage;
 
-import com.urise.webapp.exception.ExistStorageException;
-import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.model.Resume;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Collections;
 import java.util.List;
 
 public class ListStorage extends AbstractStorage {
-    private static final List<Resume> storage = new ArrayList<>();
+    private static List<Resume> list = new ArrayList<>();
 
     @Override
     public void clear() {
-        storage.clear();
+        list.clear();
     }
 
     @Override
-    public void save(Resume resume) {
-        int index = getIndex(resume.getUuid());
-        if (index > 0) {                        // Проверка наличия
-            throw new ExistStorageException(resume.getUuid());
-        } else {
-            storage.add(resume);
-        }
+    public List<Resume> doGetAll(){
+        return new ArrayList<>(list);
     }
 
     @Override
-    public Resume get(String uuid) {
-        int index = getIndex(uuid);
-        if (index >= 0) {                // Проверка наличия
-            return storage.get(index);
-        } else {
-            throw new NotExistStorageException(uuid);
-        }
+    public void doSave(Resume resume) {
+        list.add(resume);
     }
 
     @Override
-    public void delete(String uuid) {
-        int index = getIndex(uuid);
-        if (index > 0) {                // Проверка наличия
-            storage.remove(index);
-        } else {
-            throw new NotExistStorageException(uuid);
-        }
+    public Resume doGet(Object index) {
+        return list.get((Integer) index);
     }
 
     @Override
-    public void update(Resume resume) {
-        int index = getIndex(resume.getUuid());
-        if (index > 0) {                        // Проверка наличия
-            storage.set(index, resume);
-        } else {
-            throw new NotExistStorageException(resume.getUuid());
-        }
+    public void doDelete(Object index) {
+        list.remove(((Integer) index).intValue());
     }
 
     @Override
-    public Resume[] getAll() {
-        return storage.toArray(new Resume[0]);
+    public void doUpdate(Resume resume, Object index) {
+        list.set((Integer) index, resume);
+    }
+
+    @Override
+    protected boolean isExist(Object searchKey) {
+        return searchKey != null;
     }
 
     @Override
     public int size() {
-        return storage.size();
+        return list.size();
     }
 
     @Override
-    protected int getIndex(String uuid) {
-        for (Resume r : storage) {
-            if (r.getUuid().equals(uuid)) return storage.indexOf(r);
+    protected Integer getSearchKey(String uuid) {
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getUuid().equals(uuid)) return i;
         }
-        return -1;
+        return null;
     }
 
-    @Override
-    protected void fillDeletedElement(int index) {
-
-    }
-
-    @Override
-    protected void insertElement(Resume resume, int index) {
-
-    }
 }

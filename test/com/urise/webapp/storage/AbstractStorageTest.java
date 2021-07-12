@@ -8,6 +8,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Arrays;
+import java.util.List;
+
 public abstract class AbstractStorageTest {
     protected Storage storage;
 
@@ -16,11 +19,11 @@ public abstract class AbstractStorageTest {
     }
 
     private static final String UUID_1 = "uuid1";
-    protected static final Resume RESUME_1 = new Resume(UUID_1);
+    protected static final Resume RESUME_1 = new Resume(UUID_1, "name1");
     private static final String UUID_2 = "uuid2";
-    protected static final Resume RESUME_2 = new Resume(UUID_2);
+    protected static final Resume RESUME_2 = new Resume(UUID_2, "name2");
     private static final String UUID_3 = "uuid3";
-    protected static final Resume RESUME_3 = new Resume(UUID_3);
+    protected static final Resume RESUME_3 = new Resume(UUID_3, "name3");
 
     @Before
     public void setUp() {
@@ -29,6 +32,7 @@ public abstract class AbstractStorageTest {
         storage.save(RESUME_2);
         storage.save(RESUME_3);
     }
+
     @Test(expected = NotExistStorageException.class)
     public void getNotExist() {
         storage.get("uuid7");
@@ -42,7 +46,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void save() {
-        Resume r4 = new Resume("uuid4");
+        Resume r4 = new Resume("uuid4", "name4");
         storage.save(r4);
         assertGet(r4);
     }
@@ -74,47 +78,25 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void update() {
-        Resume updatedResumeR2 = new Resume("uuid2");
+        Resume updatedResumeR2 = new Resume("uuid2", "name2");
         storage.update(updatedResumeR2);
         assertGet(updatedResumeR2);
     }
 
     @Test(expected = NotExistStorageException.class)
     public void updateNotExist() {
-        storage.update(new Resume("uuid7"));
+        storage.update(new Resume("uuid7", "name7"));
     }
 
     @Test
-    public void getAll() {
-        Resume[] allResumes = storage.getAll();
-        Assert.assertEquals(allResumes[0], RESUME_1);
-        Assert.assertEquals(allResumes[1], RESUME_2);
-        Assert.assertEquals(allResumes[2], RESUME_3);
-    }
-
-//    @Test
-//    public void size() {
-//        assertSize(3);
-//    }
-
-    @Test(expected = StorageException.class)
-    public void saveOverflow() {
-        StringBuilder newUuid = new StringBuilder("uuid");
-        try {
-            for (int i = 4; i <= AbstractArrayStorage.STORAGE_LIMIT; i++) {
-                storage.save(new Resume(newUuid.append(i).toString()));
-            }
-        } catch (StorageException e) {
-            Assert.fail("unexpected storageOverflow!");
-        }
-        storage.save(new Resume("Uuid10001"));
+    public void getAllSorted() {
+        List<Resume> allResumes = storage.getAllSorted();
+        Assert.assertEquals(3, allResumes.size());
+        Assert.assertEquals(allResumes, Arrays.asList(RESUME_1, RESUME_2, RESUME_3));
     }
 
     private void assertGet(Resume resume) {
         Assert.assertEquals(resume, storage.get(resume.getUuid()));
     }
-
-//    private void assertSize(int size){
-//        Assert.assertEquals(size, storage.size());
-//    }
 }
+

@@ -2,6 +2,8 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
 
+import java.util.List;
+
 /**
  * Array based storage for Resumes
  */
@@ -13,7 +15,7 @@ public class ArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    public int getIndex(String uuid) {
+    public Integer getSearchKey(String uuid) {
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuid)) {
                 return i;
@@ -23,7 +25,8 @@ public class ArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    protected void insertElement(Resume resume, int index) {
+    protected void insertElement(Resume resume) {
+        storage[size] = resume;
     }
 
     /**
