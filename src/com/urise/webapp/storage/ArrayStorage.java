@@ -2,8 +2,6 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
 
-import java.util.List;
-
 /**
  * Array based storage for Resumes
  */
@@ -25,7 +23,7 @@ public class ArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    protected void insertElement(Resume resume) {
+    protected void insertElement(Resume resume, int index) {
         storage[size] = resume;
     }
 

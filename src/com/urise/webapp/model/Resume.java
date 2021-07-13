@@ -1,6 +1,5 @@
 package com.urise.webapp.model;
 
-import java.util.Comparator;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -31,12 +30,6 @@ public class Resume implements Comparable<Resume> {
     public String toString() {
         return uuid + "(" + fullName + ")";
     }
-
-//    @Override
-//    public int compare(Resume o1, Resume o2) {
-//        return o1.uuid.compareTo(o2.uuid);
-//    }
-
 
     @Override
     public boolean equals(Object o) {
