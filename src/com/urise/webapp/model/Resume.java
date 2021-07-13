@@ -32,12 +32,6 @@ public class Resume implements Comparable<Resume> {
         return uuid + "(" + fullName + ")";
     }
 
-//    @Override
-//    public int compare(Resume o1, Resume o2) {
-//        return o1.uuid.compareTo(o2.uuid);
-//    }
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

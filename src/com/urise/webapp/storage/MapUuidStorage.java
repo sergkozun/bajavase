@@ -14,28 +14,28 @@ public class MapUuidStorage extends AbstractStorage {
     }
 
     @Override
-    public List<Resume> doGetAll(){
-        return new ArrayList<Resume>(map.values());
+    public List<Resume> doGetAll() {
+        return new ArrayList<>(map.values());
     }
 
     @Override
-    public void doSave(Resume resume) {
-        map.put(resume.getUuid(), resume);
+    public void doSave(Resume resume, Object uuid) {
+        map.put((String) uuid, resume);
     }
 
     @Override
     protected boolean isExist(Object searchKey) {
-        return map.containsKey(searchKey);
+        return map.containsKey((String) searchKey);
     }
 
     @Override
     public Resume doGet(Object searchKey) {
-        return map.get(searchKey);
+        return map.get((String) searchKey);
     }
 
     @Override
     public void doDelete(Object searchKey) {
-        map.remove(searchKey);
+        map.remove((String) searchKey);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class MapUuidStorage extends AbstractStorage {
 
     @Override
     protected Object getSearchKey(String uuid) {
-            return uuid;
+        return uuid;
     }
 
 }

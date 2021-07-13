@@ -22,7 +22,7 @@ public abstract class AbstractStorage implements Storage {
 
     public void save(Resume resume) {
         Object searchKey = getNotExistedKey(resume.getUuid());
-        doSave(resume);
+        doSave(resume, searchKey);
     }
 
     public void delete(String uuid) {
@@ -42,7 +42,7 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract void doDelete(Object searchKey);
 
-    protected abstract void doSave(Resume resume);
+    protected abstract void doSave(Resume resume, Object searchKey);
 
     protected abstract void doUpdate(Resume resume, Object searchKey);
 

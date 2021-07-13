@@ -20,7 +20,7 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    public void doSave(Resume resume) {
+    public void doSave(Resume resume, Object searchKey) {
         list.add(resume);
     }
 
