@@ -29,8 +29,6 @@ public class ArrayStorage extends AbstractArrayStorage {
         storage[size] = resume;
     }
 
-    /**
-     * @return array, contains only Resumes in storage (without null)
-     */
+
 
 }
