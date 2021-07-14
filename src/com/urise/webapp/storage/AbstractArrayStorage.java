@@ -1,5 +1,7 @@
 package com.urise.webapp.storage;
 
+import com.urise.webapp.exception.ExistStorageException;
+import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 
@@ -17,17 +19,18 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
         return index >= 0;
     }
 
+    protected abstract Integer getSearchKey(String uuid);
 
     protected void doUpdate(Resume resume, Integer searchKey) {
-        storage[ searchKey] = resume;
+        storage[searchKey] = resume;
     }
 
     @Override
-    protected void doSave(Resume resume) {
+    protected void doSave(Resume resume, Integer index) {
         if (size == STORAGE_LIMIT) {
             throw new StorageException("Storage Overflow", resume.getUuid());
         } else {
-            insertElement(resume, );
+            insertElement(resume, index);
             size++;
         }
     }
