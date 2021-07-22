@@ -2,12 +2,14 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.exception.ExistStorageException;
 import com.urise.webapp.exception.NotExistStorageException;
-import com.urise.webapp.model.Resume;
+import com.urise.webapp.model.*;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.Month;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public abstract class AbstractStorageTest {
@@ -25,10 +27,28 @@ public abstract class AbstractStorageTest {
     protected static final Resume R3;
 
     static {
-        R1 = new Resume(UUID_1, "name1");
-        R2 = new Resume(UUID_2, "name2");
-        R3 = new Resume(UUID_3, "name3");
-
+        R1 = new Resume(UUID_1, "Kozun Sergey");
+        R2 = new Resume(UUID_2, "Fokin Nikolay");
+        R3 = new Resume(UUID_3, "Loktionov Vitaly");
+        R1.addContact(ContactType.EMAIL, "kozunsv@gmail.com");
+        R1.addContact(ContactType.PHONE, "+79136797316");
+        R1.addSection(SectionType.OBJECTIVE, new TextSection("Objective1"));
+        R1.addSection(SectionType.PERSONAL, new TextSection("Personal data"));
+        R1.addSection(SectionType.ACHIEVEMENT, new ListSection("ACHIEVEMENT1", "ACHIEVEMENT2", "ACHIEVEMENT3"));
+        R1.addSection(SectionType.EXPERIENCE,
+                new OrganizationSection(new Organization("Organization11", "http://Organization11.ru",
+                        new Organization.Position(2006, Month.AUGUST, "position1", "content1"),
+                        new Organization.Position(2007, Month.SEPTEMBER, "position2", "content2"))));
+        R1.addSection(SectionType.EDUCATION, new OrganizationSection(new Organization("Institute1", "http://Organization44.ru",
+                new Organization.Position(2006, Month.AUGUST, "student", "fakultet1"),
+                new Organization.Position(2008, Month.JANUARY, "student", "fakultet2")),
+                new Organization("Organization12", "http://Organization22.ru",
+                        new Organization.Position(2008, Month.FEBRUARY, "student", "fakultet1"))));
+        R2.addContact(ContactType.EMAIL, "fokinnikol@inbox.ru");
+        R2.addContact(ContactType.PHONE, "+79223451234");
+        R2.addSection(SectionType.EXPERIENCE,
+                new OrganizationSection(new Organization("Organization2", "http://Organization2.ru",
+                        new Organization.Position(2012, Month.JULY, "position2", "content2    "))));
     }
     @Before
     public void setUp() {
@@ -97,7 +117,9 @@ public abstract class AbstractStorageTest {
     public void getAllSorted() {
         List<Resume> allResumes = storage.getAllSorted();
         Assert.assertEquals(3, allResumes.size());
-        Assert.assertEquals(allResumes, Arrays.asList(R1, R2, R3));
+        List<Resume> allResumes2 = Arrays.asList(R1, R2, R3);
+        Collections.sort(allResumes2);
+        Assert.assertEquals(allResumes, allResumes2);
     }
 
     private void assertGet(Resume resume) {
