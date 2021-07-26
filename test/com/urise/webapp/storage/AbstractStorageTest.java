@@ -7,12 +7,17 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
 import java.time.Month;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 public abstract class AbstractStorageTest {
+    protected static final File STORAGE_DIR = new File("C:\\Users\\Sergg\\Documents\\GitHub\\basejava\\storage");
     protected Storage storage;
 
     public AbstractStorageTest(Storage storage) {
@@ -50,6 +55,7 @@ public abstract class AbstractStorageTest {
                 new OrganizationSection(new Organization("Organization2", "http://Organization2.ru",
                         new Organization.Position(2012, Month.JULY, "position2", "content2    "))));
     }
+
     @Before
     public void setUp() {
         storage.clear();
@@ -66,7 +72,7 @@ public abstract class AbstractStorageTest {
     @Test
     public void clear() {
         storage.clear();
-        Assert.assertEquals(storage.size(), 0);
+        assertEquals(storage.size(), 0);
     }
 
     @Test
@@ -103,9 +109,9 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void update() {
-        Resume updatedResumeR2 = new Resume("uuid2", "name2");
+        Resume updatedResumeR2 = new Resume(UUID_2, "name2");
         storage.update(updatedResumeR2);
-        assertGet(updatedResumeR2);
+        assertEquals(updatedResumeR2, storage.get(UUID_2));
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -113,17 +119,8 @@ public abstract class AbstractStorageTest {
         storage.update(new Resume("uuid7", "name7"));
     }
 
-    @Test
-    public void getAllSorted() {
-        List<Resume> allResumes = storage.getAllSorted();
-        Assert.assertEquals(3, allResumes.size());
-        List<Resume> allResumes2 = Arrays.asList(R1, R2, R3);
-        Collections.sort(allResumes2);
-        Assert.assertEquals(allResumes, allResumes2);
-    }
-
     private void assertGet(Resume resume) {
-        Assert.assertEquals(resume, storage.get(resume.getUuid()));
+        assertEquals(resume, storage.get(resume.getUuid()));
     }
 }
 
