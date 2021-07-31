@@ -55,6 +55,15 @@ public class Organization implements Serializable {
                 ", positions=" + positions +
                 '}';
     }
+
+    public List<Position> getPositions() {
+        return positions;
+    }
+
+    public Link getHomePage(){
+        return homePage;
+    }
+
     @XmlAccessorType(XmlAccessType.FIELD)
     public static class Position implements Serializable{
         private static final long serialVersionUID = 1L;
@@ -114,6 +123,8 @@ public class Organization implements Serializable {
         public int hashCode() {
             return Objects.hash(startDate, endDate, title, description);
         }
+
+
 
         @Override
         public String toString() {

@@ -15,6 +15,12 @@ public class Link implements Serializable {
     public Link() {
     }
 
+    public Link(String name, String url) {
+        Objects.requireNonNull(name, "name must be not null");
+        this.name = name;
+        this.url = url;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -44,9 +50,5 @@ public class Link implements Serializable {
         return url;
     }
 
-    public Link(String name, String url) {
-        Objects.requireNonNull(name, "name must be not null");
-        this.name = name;
-        this.url = url;
-    }
+
 }
