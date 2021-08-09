@@ -1,6 +1,7 @@
 package com.urise.webapp;
 
 import com.urise.webapp.model.Resume;
+import com.urise.webapp.storage.SqlStorage;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
