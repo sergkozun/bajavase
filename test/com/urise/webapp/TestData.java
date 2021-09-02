@@ -29,6 +29,8 @@ public class TestData {
 
         R1.addContact(ContactType.EMAIL, "mail1@ya.ru");
         R1.addContact(ContactType.PHONE, "11111");
+        R2.addContact(ContactType.EMAIL, "mail22@ya.ru");
+        R3.addContact(ContactType.EMAIL, "mail33@ya.ru");
         R1.addSection(SectionType.OBJECTIVE, new TextSection("Objective1"));
         R1.addSection(SectionType.PERSONAL, new TextSection("Personal data"));
         R1.addSection(SectionType.ACHIEVEMENT, new ListSection("Achivment11", "Achivment12", "Achivment13"));
@@ -41,7 +43,7 @@ public class TestData {
         R1.addSection(SectionType.EDUCATION,
                 new OrganizationSection(
                         new Organization("Institute", null,
-                                new Organization.Position(1996, Month.JANUARY, 2000, Month.DECEMBER, "aspirant", null),
+                                new Organization.Position(1996, Month.JANUARY, 2000, Month.DECEMBER, "aspirant", "RF facultet"),
                                 new Organization.Position(2001, Month.MARCH, 2005, Month.JANUARY, "student", "IT facultet")),
                         new Organization("Organization12", "http://Organization12.ru")));
         R2.addContact(ContactType.SKYPE, "skype2");

@@ -87,6 +87,10 @@ public class Resume implements Comparable<Resume>, Serializable {
         return cmp != 0 ? cmp : uuid.compareTo(o.uuid);
     }
 
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
     public void addSection(SectionType type, Section section) {
         sections.put(type, section);
     }
